@@ -16,6 +16,7 @@
             }
             else
             {
+                app.MapOpenApi();
                 // rest of the logic here
             }
 

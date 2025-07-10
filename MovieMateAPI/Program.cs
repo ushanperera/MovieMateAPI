@@ -1,12 +1,13 @@
-using MovieMateAPI;
 using MovieMateAPI.Dependencies;
 using MovieMateAPI.Dependencies.Configs;
+using MovieMateAPI.Endpoints;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 //--------------------------Add services (DI) to app---------------------
-builder.AddAllDependencies();
+builder.AddDependencies();
+builder.AddDummyDataServices();
 
 //--------------------------Middleware--------------------------------
 var app = builder.Build();

@@ -4,3 +4,15 @@ GET {{MovieMateAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{MovieMateAPI_HostAddress}}/samples
+Accept: application/json
+
+###
+
+
+
+GET {{MovieMateAPI_HostAddress}}/
+Accept: application/json
+
+###

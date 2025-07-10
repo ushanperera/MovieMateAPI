@@ -1,5 +1,5 @@
-﻿{
-  "Movies": [
+﻿
+ [
     {
       "Title": "Star Wars: Episode IV - A New Hope",
       "Year": "1977",
@@ -50,4 +50,3 @@
       "Poster": "https://m.media-amazon.com/images/M/MV5BMTY5MjI5NTIwNl5BMl5BanBnXkFtZTYwMTM1Njg2._V1_SX300.jpg"
     }
   ]
-}

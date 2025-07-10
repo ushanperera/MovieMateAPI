@@ -2,7 +2,7 @@
 
 namespace MovieMateAPI.Constant
 {
-    public static class ProviderConstants
+    public static class Provider
     {
         public const string FilmWorld = "filmworld";
         public const string CinemaWorld = "cinemaworld";

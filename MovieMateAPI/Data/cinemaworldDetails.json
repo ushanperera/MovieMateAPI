@@ -1,22 +1,24 @@
-﻿{
-  "Title": "Star Wars: Episode V - The Empire Strikes Back",
-  "Year": "1980",
-  "Rated": "PG",
-  "Released": "20 Jun 1980",
-  "Runtime": "124 min",
-  "Genre": "Action, Adventure, Fantasy",
-  "Director": "Irvin Kershner",
-  "Writer": "Leigh Brackett (screenplay), Lawrence Kasdan (screenplay), George Lucas (story by)",
-  "Actors": "Mark Hamill, Harrison Ford, Carrie Fisher, Billy Dee Williams",
-  "Plot": "After the Rebel base on the icy planet Hoth is taken over by the Empire, Han, Leia, Chewbacca, and C-3PO flee across the galaxy from the Empire. Luke travels to the forgotten planet of Dagobah to receive training from the Jedi master Yoda, while Vader endlessly pursues him.",
-  "Language": "English",
-  "Country": "USA",
-  "Awards": "Won 1 Oscar. Another 19 wins & 18 nominations.",
-  "Poster": "https://m.media-amazon.com/images/M/MV5BMjE2MzQwMTgxN15BMl5BanBnXkFtZTcwMDQzNjk2OQ@@._V1_SX300.jpg",
-  "Metascore": "80",
-  "Rating": "8.8",
-  "Votes": "842,451",
-  "ID": "cw0080684",
-  "Type": "movie",
-  "Price": "13.5"
-}
+﻿[
+  {
+    "Title": "Star Wars: Episode V - The Empire Strikes Back",
+    "Year": "1980",
+    "Rated": "PG",
+    "Released": "20 Jun 1980",
+    "Runtime": "124 min",
+    "Genre": "Action, Adventure, Fantasy",
+    "Director": "Irvin Kershner",
+    "Writer": "Leigh Brackett (screenplay), Lawrence Kasdan (screenplay), George Lucas (story by)",
+    "Actors": "Mark Hamill, Harrison Ford, Carrie Fisher, Billy Dee Williams",
+    "Plot": "After the Rebel base on the icy planet Hoth is taken over by the Empire, Han, Leia, Chewbacca, and C-3PO flee across the galaxy from the Empire. Luke travels to the forgotten planet of Dagobah to receive training from the Jedi master Yoda, while Vader endlessly pursues him.",
+    "Language": "English",
+    "Country": "USA",
+    "Awards": "Won 1 Oscar. Another 19 wins & 18 nominations.",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BMjE2MzQwMTgxN15BMl5BanBnXkFtZTcwMDQzNjk2OQ@@._V1_SX300.jpg",
+    "Metascore": "80",
+    "Rating": "8.8",
+    "Votes": "842,451",
+    "ID": "cw0080684",
+    "Type": "movie",
+    "Price": "13.5"
+  }
+]
