@@ -6,7 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 //--------------------------Add services (DI) to app---------------------
 builder.AddDependencies();
+
 builder.AddDummyDataServices();
+builder.AddWebjetApiServices();
+
 
 //--------------------------Middleware-----------------------------------
 var app = builder.Build();

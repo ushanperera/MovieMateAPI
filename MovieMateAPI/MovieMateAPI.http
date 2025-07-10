@@ -1,17 +1,23 @@
 @MovieMateAPI_HostAddress = http://localhost:5113
 
-GET {{MovieMateAPI_HostAddress}}/filmworld/movies/
+GET {{MovieMateAPI_HostAddress}}/api/movies/compare
 Accept: application/json
 ###
 
-GET {{MovieMateAPI_HostAddress}}/cinemaworld/movies
+GET {{MovieMateAPI_HostAddress}}/api/filmworld/movies/
 Accept: application/json
 ###
 
-GET {{MovieMateAPI_HostAddress}}/filmworld/movie/fw0121766
+GET {{MovieMateAPI_HostAddress}}/api/cinemaworld/movies
 Accept: application/json
 ###
 
-GET {{MovieMateAPI_HostAddress}}/cinemaworld/movie/cw0080684
+GET {{MovieMateAPI_HostAddress}}/api/filmworld/movie/fw0121766
 Accept: application/json
 ###
+
+GET {{MovieMateAPI_HostAddress}}/api/cinemaworld/movie/cw0080684
+Accept: application/json
+###
+
+

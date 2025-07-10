@@ -14,11 +14,11 @@
             {
                 app.MapOpenApi();
             }
-            else
-            {
-                app.MapOpenApi();
-                // rest of the logic here
-            }
+            //else
+            //{
+            //    app.MapOpenApi();
+            //    // rest of the logic here
+            //}
 
         }
     }

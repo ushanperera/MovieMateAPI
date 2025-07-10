@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MovieMateAPI.Models;
 using MovieMateAPI.Repository;
+using MovieMateAPI.Services;
 
 namespace MovieMateAPI.Endpoints
 {
@@ -8,13 +9,26 @@ namespace MovieMateAPI.Endpoints
     {
         public static void UseAppEndpoints(this WebApplication app)
         {
-            app.MapGet("/cinemaworld/movies", GetCinemaWorldMovie);
-            app.MapGet("/filmworld/movies", GetFilmWorldMovie);
+            app.MapGet("/api/cinemaworld/movies", GetCinemaWorldMovie);
+            app.MapGet("/api/filmworld/movies", GetFilmWorldMovie);
 
-            app.MapGet("/cinemaworld/movie/{id}", GetCinemaWorldMovieById);
-            app.MapGet("/filmworld/movie/{id}", GetFilmWorldMovieById);
+            app.MapGet("/api/cinemaworld/movie/{id}", GetCinemaWorldMovieById);
+            app.MapGet("/api/filmworld/movie/{id}", GetFilmWorldMovieById);
+
+            app.MapGet("/api/movies/compare", async (IMovieService service) =>
+            {
+                var data = await service.GetMoviesWithCheapestPriceAsync();
+
+                return Results.Ok(data.Select(x => new
+                {
+                    x.movie.Title,
+                    x.movie.Year,
+                    x.movie.Poster,
+                    CheapestPrice = x.lowestPrice?.ToString("C") ?? "Unavailable"
+                }));
+            });
+
         }
-
         private static IResult GetCinemaWorldMovie(CinemaWorldData data, ILoggerFactory loggerFactory)
         {
             try

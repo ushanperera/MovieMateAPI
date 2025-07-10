@@ -14,7 +14,7 @@ namespace MovieMateAPI.Dependencies
             //Add the Cores services
             builder.Services.AddCoresServises();
 
-            //
+           
 
         }
     }
