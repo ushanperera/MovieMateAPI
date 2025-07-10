@@ -1,4 +1,5 @@
-﻿using MovieMateAPI.Models;
+﻿using MovieMateAPI.Constant;
+using MovieMateAPI.Models;
 
 
 namespace MovieMateAPI.Services
@@ -15,7 +16,7 @@ namespace MovieMateAPI.Services
             _httpClient.DefaultRequestHeaders.Add("x-access-token", config["WebjetApi:ApiToken"]);
         }
 
-        public async Task<List<(Movie movie, decimal? lowestPrice)>> GetMoviesWithCheapestPriceAsync()
+        public async Task<List<(Movie movie, decimal? lowestPrice)>> GetCheaperMoviePriceAsync()
         {
             var allMovies = await GetAllMovies();
 
@@ -33,7 +34,7 @@ namespace MovieMateAPI.Services
 
                 if (cwMovie != null)
                 {
-                    var details = await TryGetMovieDetails("cinemaworld", cwMovie.ID);
+                    var details = await TryGetMovieDetails(Provider.CinemaWorld, cwMovie.ID);
                     if (details != null && Decimal.TryParse(details.Price, out var price))
                     {
                         prices.Add(price);
@@ -42,7 +43,7 @@ namespace MovieMateAPI.Services
 
                 if (fwMovie != null)
                 {
-                    var details = await TryGetMovieDetails("filmworld", fwMovie.ID);
+                    var details = await TryGetMovieDetails(Provider.FilmWorld, fwMovie.ID);
                     if (details != null && Decimal.TryParse(details.Price, out var price))
                     {
                         prices.Add(price);
@@ -58,8 +59,8 @@ namespace MovieMateAPI.Services
 
         public async Task<List<Movie>> GetAllMovies()
         {
-            var cwTask = TryGetMovies("cinemaworld");
-            var fwTask = TryGetMovies("filmworld");
+            var cwTask = TryGetMovies(Provider.CinemaWorld);
+            var fwTask = TryGetMovies(Provider.FilmWorld);
 
             await Task.WhenAll(cwTask, fwTask);
 

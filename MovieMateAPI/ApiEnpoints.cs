@@ -20,7 +20,7 @@ namespace MovieMateAPI.Endpoints
         }
         public static async Task<IResult> GetCompareMovies(IMovieService service)
         {
-            var data = await service.GetMoviesWithCheapestPriceAsync();
+            var data = await service.GetCheaperMoviePriceAsync();
 
             return Results.Ok(data.Select(x => new
             {

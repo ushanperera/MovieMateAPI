@@ -2,6 +2,6 @@
 {
     public class MovieResponse
     {
-        public List<Movie> Movies { get; set; } = new();
+        public List<Movie> Movies { get; set; } = [];
     }
 }

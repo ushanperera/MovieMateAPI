@@ -4,6 +4,6 @@ namespace MovieMateAPI.Services
 {
     public interface IMovieService
     {
-        Task<List<(Movie movie, decimal? lowestPrice)>> GetMoviesWithCheapestPriceAsync();
+        Task<List<(Movie movie, decimal? lowestPrice)>> GetCheaperMoviePriceAsync();
     }
 }

@@ -32,7 +32,7 @@ namespace MovieMateAPI.Tests
                 (new Movie { Title = "Movie 1", Year = "2021", Poster = "poster1.jpg" }, 10.99m),
                 (new Movie { Title = "Movie 2", Year = "2022", Poster = "poster2.jpg" }, null)
             };
-            mockMovieService.Setup(s => s.GetMoviesWithCheapestPriceAsync()).ReturnsAsync(movies);
+            mockMovieService.Setup(s => s.GetCheaperMoviePriceAsync()).ReturnsAsync(movies);
 
             // Act
             var result = await Endpoints.ApiEndpoints.GetCompareMovies(mockMovieService.Object);
