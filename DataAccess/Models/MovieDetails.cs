@@ -4,9 +4,10 @@ namespace MovieMateAPI.Models
 {
     public class MovieDetails
     {
-        //[Required]
-        public required string ID { get; set; }
-        public required string Title { get; set; }
+        [Required]
+        public string ID { get; set; }
+        [Required] 
+        public string Title { get; set; }
         public string Year { get; set; }
         public string Rated { get; set; }
         public string Released { get; set; }

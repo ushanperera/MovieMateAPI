@@ -9,7 +9,7 @@ namespace MovieMateAPI.Models
     public class Movie
     {
         [Required]
-        public required string ID { get; set; }
+        public string ID { get; set; } // Removed 'required' keyword to ensure compatibility with C# 10.0
 
         [Required]
         [MinLength(2)]
