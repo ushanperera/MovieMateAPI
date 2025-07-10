@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MovieMateAPI.Repository;
+using System.ComponentModel.DataAnnotations;
 
 namespace MovieMateAPI.Models
 {

@@ -5,7 +5,6 @@ namespace MovieMateAPI.Repository
 {
     public class FilmWorldData
     {
-        public List<Movie> movieList { get; private set; }
         public MovieResponse movieResponse { get; private set; }
 
         public FilmWorldData()
@@ -19,7 +18,7 @@ namespace MovieMateAPI.Repository
 
             string jsonString = File.ReadAllText(jsonFilePath);
 
-            movieList = JsonSerializer.Deserialize<List<Movie>>(jsonString, options) ?? new();
+            List<Movie> movieList = JsonSerializer.Deserialize<List<Movie>>(jsonString, options) ?? new();
 
             movieResponse = new MovieResponse
             {

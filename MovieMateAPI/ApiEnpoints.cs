@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MovieMateAPI.Models;
 using MovieMateAPI.Repository;
 
 namespace MovieMateAPI.Endpoints
