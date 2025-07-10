@@ -5,7 +5,7 @@ namespace MovieMateAPI.Repository
 {
     public class CinemaWorldData
     {
-        public MovieResponse movieResponse { get; private set; }
+        public MovieResponse? movieResponse { get; private set; }
 
         public CinemaWorldData()
         {
@@ -22,8 +22,6 @@ namespace MovieMateAPI.Repository
             {
                 Movies = movieList
             };
-        }
-
-    
+        }    
     }
 }

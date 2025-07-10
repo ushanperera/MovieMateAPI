@@ -21,15 +21,33 @@ namespace MovieMateAPI.Services
 
             var results = new List<(Movie, decimal?)>();
 
-            foreach (var movie in allMovies.DistinctBy(m => m.Title))
+            var groupedMovies = allMovies.GroupBy(m => m.Title);
+
+            foreach (var group in groupedMovies)
             {
                 var prices = new List<decimal>();
+                var movie = group.First(); // Use the first movie as the representative for the group
 
-                var cw = await TryGetMovieDetails("cinemaworld", movie.ID);
-                if (cw?.Price != null) prices.Add(Decimal.Parse(cw.Price));
+                var cwMovie = group.FirstOrDefault(m => m.ID.StartsWith("cw"));
+                var fwMovie = group.FirstOrDefault(m => m.ID.StartsWith("fw"));
 
-                var fw = await TryGetMovieDetails("filmworld", movie.ID);
-                if (fw?.Price != null) prices.Add(Decimal.Parse(fw.Price));
+                if (cwMovie != null)
+                {
+                    var details = await TryGetMovieDetails("cinemaworld", cwMovie.ID);
+                    if (details != null && Decimal.TryParse(details.Price, out var price))
+                    {
+                        prices.Add(price);
+                    }
+                }
+
+                if (fwMovie != null)
+                {
+                    var details = await TryGetMovieDetails("filmworld", fwMovie.ID);
+                    if (details != null && Decimal.TryParse(details.Price, out var price))
+                    {
+                        prices.Add(price);
+                    }
+                }
 
                 decimal? lowest = prices.Any() ? prices.Min() : null;
                 results.Add((movie, lowest));
@@ -38,7 +56,7 @@ namespace MovieMateAPI.Services
             return results;
         }
 
-        private async Task<List<Movie>> GetAllMovies()
+        public async Task<List<Movie>> GetAllMovies()
         {
             var cwTask = TryGetMovies("cinemaworld");
             var fwTask = TryGetMovies("filmworld");

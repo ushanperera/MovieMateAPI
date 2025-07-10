@@ -9,31 +9,33 @@ namespace MovieMateAPI.Endpoints
     {
         public static void UseAppEndpoints(this WebApplication app)
         {
+            app.MapGet("/api/movies/compare", GetCompareMovies);
+
             app.MapGet("/api/cinemaworld/movies", GetCinemaWorldMovie);
             app.MapGet("/api/filmworld/movies", GetFilmWorldMovie);
-
             app.MapGet("/api/cinemaworld/movie/{id}", GetCinemaWorldMovieById);
             app.MapGet("/api/filmworld/movie/{id}", GetFilmWorldMovieById);
 
-            app.MapGet("/api/movies/compare", async (IMovieService service) =>
-            {
-                var data = await service.GetMoviesWithCheapestPriceAsync();
-
-                return Results.Ok(data.Select(x => new
-                {
-                    x.movie.Title,
-                    x.movie.Year,
-                    x.movie.Poster,
-                    CheapestPrice = x.lowestPrice?.ToString("C") ?? "Unavailable"
-                }));
-            });
 
         }
-        private static IResult GetCinemaWorldMovie(CinemaWorldData data, ILoggerFactory loggerFactory)
+        public static async Task<IResult> GetCompareMovies(IMovieService service)
+        {
+            var data = await service.GetMoviesWithCheapestPriceAsync();
+
+            return Results.Ok(data.Select(x => new
+            {
+                x.movie.Title,
+                x.movie.Year,
+                x.movie.Poster,
+                CheapestPrice = x.lowestPrice.HasValue ? x.lowestPrice.Value.ToString() : "Unavailable"
+            }));
+        }
+
+        public static IResult GetCinemaWorldMovie(CinemaWorldData data, ILoggerFactory loggerFactory)
         {
             try
             {
-                if (data?.movieResponse == null)
+                if (data?.movieResponse == null || data.movieResponse.Movies == null)
                 {
                     var logger = loggerFactory.CreateLogger("CinemaWorld");
                     logger.LogWarning("movieResponse was null");
