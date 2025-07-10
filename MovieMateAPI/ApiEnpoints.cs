@@ -8,65 +8,42 @@ namespace MovieMateAPI.Endpoints
     {
         public static void UseAppEndpoints(this WebApplication app)
         {
-            //app.MapGet("/hello", () => "Hello World!");
-
             app.MapGet("/", () => "Hellow...");
 
-            //app.MapGet("/samples", (LoadAllSample));
+            app.MapGet("/cinemaworld/movies", (GetCinemaWorldMovie));
+            app.MapGet("/filmworld/movies", (GetFilmWorldMovie));
 
-            //app.MapPost("/movies", (Movie movie) =>
+            app.MapGet("/cinemaworld/movie/{id}", (GetCinemaWorldMovieById));
+            app.MapGet("/filmworld/movie/{id}", (GetFilmWorldMovieById));
+
+
+            //app.MapGet("/cinemaworld/movies", async (HttpContext context) =>
             //{
-            //    return Results.Ok(movie.Title);
+            //    var data = context.RequestServices.GetService<CinemaWorldData>();
+            //    await context.Response.WriteAsJsonAsync(data?.movieResponse);
             //});
 
-            //app.MapGet("/cinemaworld/movies", (GetCinemaWorldMovie));
-            //app.MapGet("/filmworld/movies", (GetFilmWorldMovie));
+            //app.MapGet("/filmworld/movies", async (HttpContext context) =>
+            //{
+            //    var data = context.RequestServices.GetService<FilmWorldData>();
+            //    await context.Response.WriteAsJsonAsync(data?.movieResponse);
+            //});
 
-            app.MapGet("/cinemaworld/movies", async (HttpContext context) =>
-            {
-                var data = context.RequestServices.GetService<CinemaWorldData>();
-                await context.Response.WriteAsJsonAsync(data?.movieResponse);
-            });
+            //app.MapGet("/cinemaworld/movie/{id}", async (HttpContext context, string id) =>
+            //{
+            //    var data = context.RequestServices.GetService<CinemaWorldDetailsData>();
+            //    var movie = data?.GetMovieById(id);
+            //    await context.Response.WriteAsJsonAsync(movie);
+            //});
 
-            app.MapGet("/filmworld/movies", async (HttpContext context) =>
-            {
-                var data = context.RequestServices.GetService<FilmWorldData>();
-                await context.Response.WriteAsJsonAsync(data?.movieResponse);
-            });
-
-
-
-            app.MapGet("/cinemaworld/movie/{id}", async (HttpContext context, string id) =>
-            {
-                var data = context.RequestServices.GetService<CinemaWorldDetailsData>();
-                var movie = data?.GetMovieById(id);
-                await context.Response.WriteAsJsonAsync(movie);
-            });
-
-            app.MapGet("/filmworld/movie/{id}", async (HttpContext context, string id) =>
-            {
-                var data = context.RequestServices.GetService<FilmWorldDetailsData>();
-                var movie = data?.GetMovieById(id);
-                await context.Response.WriteAsJsonAsync(movie);
-            });
-
-
-
-            //app.MapGet("/cinemaworld/movie/{id}", (GetCinemaWorldMovieById));
-
-            //app.MapGet("/filmworld/movie/{id}", (GetFilmWorldMovieById));
-
-
-
-            //app.MapGet("/filmworld/movies", GetFilmWorldMovie);
-            //app.MapGet("/cinemaworld/movie/{id}", (GetCinemaWorldMovieById));
-            //app.MapGet("/filmworld/movie/{id}", (GetFilmWorldMovieById));
-
+            //app.MapGet("/filmworld/movie/{id}", async (HttpContext context, string id) =>
+            //{
+            //    var data = context.RequestServices.GetService<FilmWorldDetailsData>();
+            //    var movie = data?.GetMovieById(id);
+            //    await context.Response.WriteAsJsonAsync(movie);
+            //});
 
         }
-
-
-
 
         private static IResult GetCinemaWorldMovie(CinemaWorldData data)
         {
@@ -78,43 +55,15 @@ namespace MovieMateAPI.Endpoints
             return Results.Ok(data?.movieResponse);
         }
 
-        private static async Task<IResult> GetCinemaWorldMovieById(CinemaWorldDetailsData data, int id)
+        private static IResult GetCinemaWorldMovieById(CinemaWorldDetailsData data, string id)
         {
-            return Results.Ok("");
+            return Results.Ok(data?.GetMovieById(id));
         }
 
-        private static async Task<IResult> GetFilmWorldMovieById(FilmWorldDetailsData data, int id)
+        private static IResult GetFilmWorldMovieById(FilmWorldDetailsData data, string id)
         {
-            return Results.Ok("");
+            return Results.Ok(data?.GetMovieById(id));
         }
 
-
-
-        //private static IResult LoadAllSample(SampleData data)
-        //{
-        //    return Results.Ok(data?.sampleData);
-        //}
-
-        //private static IResult GetCinemaWorldMovie(CinemaWorldData data)
-        //{
-        //    //try
-        //    //{
-        //    //var users = await data;
-        //    return Results.Ok(data?.movieResponse);
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //    return Results.Problem(ex.Message);
-        //    //}
-        //}
-        private static async Task<IResult> GetFilmWorldMovie(Movie data)
-        {
-            return Results.Ok("");
-        }
-    
-        private static async Task<IResult> GetFilmWorldMovieById(Movie data, int id)
-        {
-            return Results.Ok("");
-        }
     }
 }

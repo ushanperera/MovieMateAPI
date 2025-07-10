@@ -24,5 +24,10 @@ namespace MovieMateAPI.Repository
                 Movies = movieList
             };
         }
+
+        public MovieResponse getAllMovies()
+        {
+            return movieResponse;
+        }
     }
 }
