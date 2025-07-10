@@ -1,94 +1,96 @@
-﻿using Microsoft.AspNetCore.Builder;
-using MovieMateAPI.Models;
+﻿using Microsoft.Extensions.Logging;
 using MovieMateAPI.Repository;
 
 namespace MovieMateAPI.Endpoints
 {
-    public static class ApiEnpoints
+    public static class ApiEndpoints
     {
         public static void UseAppEndpoints(this WebApplication app)
         {
+            app.MapGet("/cinemaworld/movies", GetCinemaWorldMovie);
+            app.MapGet("/filmworld/movies", GetFilmWorldMovie);
 
-            app.MapGet("/cinemaworld/movies", (GetCinemaWorldMovie));
-            app.MapGet("/filmworld/movies", (GetFilmWorldMovie));
-
-            app.MapGet("/cinemaworld/movie/{id}", (GetCinemaWorldMovieById));
-            app.MapGet("/filmworld/movie/{id}", (GetFilmWorldMovieById));
-
-
-            //app.MapGet("/cinemaworld/movies", async (HttpContext context) =>
-            //{
-            //    var data = context.RequestServices.GetService<CinemaWorldData>();
-            //    await context.Response.WriteAsJsonAsync(data?.movieResponse);
-            //});
-
-            //app.MapGet("/filmworld/movies", async (HttpContext context) =>
-            //{
-            //    var data = context.RequestServices.GetService<FilmWorldData>();
-            //    await context.Response.WriteAsJsonAsync(data?.movieResponse);
-            //});
-
-            //app.MapGet("/cinemaworld/movie/{id}", async (HttpContext context, string id) =>
-            //{
-            //    var data = context.RequestServices.GetService<CinemaWorldDetailsData>();
-            //    var movie = data?.GetMovieById(id);
-            //    await context.Response.WriteAsJsonAsync(movie);
-            //});
-
-            //app.MapGet("/filmworld/movie/{id}", async (HttpContext context, string id) =>
-            //{
-            //    var data = context.RequestServices.GetService<FilmWorldDetailsData>();
-            //    var movie = data?.GetMovieById(id);
-            //    await context.Response.WriteAsJsonAsync(movie);
-            //});
-
+            app.MapGet("/cinemaworld/movie/{id}", GetCinemaWorldMovieById);
+            app.MapGet("/filmworld/movie/{id}", GetFilmWorldMovieById);
         }
 
         private static IResult GetCinemaWorldMovie(CinemaWorldData data, ILoggerFactory loggerFactory)
         {
             try
             {
-                if (data.movieResponse == null)
+                if (data?.movieResponse == null)
                 {
-                    loggerFactory.CreateLogger("CinemaWorld movieResponse was null");
-                    return Results.NotFound("No Data found");
+                    var logger = loggerFactory.CreateLogger("CinemaWorld");
+                    logger.LogWarning("movieResponse was null");
+
+                    return Results.NotFound("No data found.");
                 }
-                return Results.Ok(data?.movieResponse);
+
+                return Results.Ok(data.movieResponse);
             }
             catch (Exception ex)
             {
-                loggerFactory.CreateLogger("Error in GetCinemaWorldMovie:" + ex.Message);
-                return Results.InternalServerError(ex.Message);
-            }
+                var logger = loggerFactory.CreateLogger("CinemaWorld");
+                logger.LogError(ex, "Unhandled error in GetCinemaWorldMovie");
 
+                return Results.Problem("An error occurred while retrieving data.");
+            }
         }
 
-        private static IResult GetFilmWorldMovie(FilmWorldData data)
+        private static IResult GetFilmWorldMovie(FilmWorldData data, ILoggerFactory loggerFactory)
         {
-            if (data.movieResponse == null)
+            if (data?.movieResponse == null)
             {
-                return Results.NotFound("No Data found");
+                var logger = loggerFactory.CreateLogger("FilmWorld");
+                logger.LogWarning("FilmWorld movieResponse is null.");
+                return Results.NotFound("No data found.");
             }
-            return Results.Ok(data?.movieResponse);
+
+            return Results.Ok(data.movieResponse);
         }
 
-        private static IResult GetCinemaWorldMovieById(CinemaWorldDetailsData data, string id)
-        {
-            if (data == null)
-            {
-                return Results.NotFound("No Data found");
-            }
-            return Results.Ok(data?.GetMovieById(id));
-        }
-
-        private static IResult GetFilmWorldMovieById(FilmWorldDetailsData data, string id)
+        private static IResult GetCinemaWorldMovieById(CinemaWorldDetailsData data, string id, ILoggerFactory loggerFactory)
         {
             if (data == null)
             {
-                return Results.NotFound("No Data found");
+                var logger = loggerFactory.CreateLogger("CinemaWorld");
+                logger.LogWarning("CinemaWorldDetailsData is null for ID {Id}", id);
+
+                return Results.NotFound("No data found.");
             }
-            return Results.Ok(data?.GetMovieById(id));
+
+            var movie = data.GetMovieById(id);
+
+            if (movie == null)
+            {
+                var logger = loggerFactory.CreateLogger("CinemaWorld");
+                logger.LogWarning("No movie found with ID {Id} in CinemaWorld.", id);
+
+                return Results.NotFound($"No movie found with ID {id}.");
+            }
+
+            return Results.Ok(movie);
         }
 
+        private static IResult GetFilmWorldMovieById(FilmWorldDetailsData data, string id, ILoggerFactory loggerFactory)
+        {
+            if (data == null)
+            {
+                var logger = loggerFactory.CreateLogger("FilmWorld");
+                logger.LogWarning("FilmWorldDetailsData is null for ID {Id}", id);
+                return Results.NotFound("No data found.");
+            }
+
+            var movie = data.GetMovieById(id);
+
+            if (movie == null)
+            {
+                var logger = loggerFactory.CreateLogger("FilmWorld");
+                logger.LogWarning("No movie found with ID {Id} in FilmWorld.", id);
+                return Results.NotFound($"No movie found with ID {id}.");
+            }
+
+            return Results.Ok(movie);
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using MovieMateAPI.Repository;
 
-namespace MovieMateAPI.Dependencies
+namespace MovieMateAPI.Dependencies.Configs
 {
     public static class DummyDataConfig
     {
