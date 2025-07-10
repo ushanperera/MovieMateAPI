@@ -43,6 +43,7 @@ namespace MovieMateAPI.Endpoints
             {
                 var logger = loggerFactory.CreateLogger("FilmWorld");
                 logger.LogWarning("FilmWorld movieResponse is null.");
+
                 return Results.NotFound("No data found.");
             }
 
@@ -78,6 +79,7 @@ namespace MovieMateAPI.Endpoints
             {
                 var logger = loggerFactory.CreateLogger("FilmWorld");
                 logger.LogWarning("FilmWorldDetailsData is null for ID {Id}", id);
+
                 return Results.NotFound("No data found.");
             }
 
@@ -87,6 +89,7 @@ namespace MovieMateAPI.Endpoints
             {
                 var logger = loggerFactory.CreateLogger("FilmWorld");
                 logger.LogWarning("No movie found with ID {Id} in FilmWorld.", id);
+
                 return Results.NotFound($"No movie found with ID {id}.");
             }
 
