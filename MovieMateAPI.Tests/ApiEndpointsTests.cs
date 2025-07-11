@@ -32,10 +32,10 @@ namespace MovieMateAPI.Tests
                 (new Movie { Title = "Movie test 1", Year = "2021" }, 1234 ),
                 (new Movie { Title = "Movie test 2", Year = "2022" }, null)
             };
-            mockMovieService.Setup(s => s.GetCheaperMoviePriceAsync()).ReturnsAsync(movies);
+            mockMovieService.Setup(s => s.GetLowestPriceMoviesPriceAsync()).ReturnsAsync(movies);
 
             // Act
-            var result = await ApiEndpoints.GetCompareMovies(mockMovieService.Object, _mockLoggerFactory.Object);
+            var result = await ApiEndpoints.GetLowestPriceMovies(mockMovieService.Object, _mockLoggerFactory.Object);
 
             // Assert
             var okResult = Assert.IsAssignableFrom<IValueHttpResult<IEnumerable<object>>>(result);

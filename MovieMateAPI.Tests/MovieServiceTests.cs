@@ -66,7 +66,7 @@ namespace MovieMateAPI.Tests.Services
             SetupHttpResponse("http://testapi/filmworld/movie/fw3", filmWorldDetails3);
 
             // Act
-            var result = await _movieService.GetCheaperMoviePriceAsync();
+            var result = await _movieService.GetLowestPriceMoviesPriceAsync();
 
             // Assert
             Assert.Equal(3, result.Count);
@@ -94,7 +94,7 @@ namespace MovieMateAPI.Tests.Services
             SetupHttpResponse("http://testapi/filmworld/movie/fw1", movieDetailsWithValidPrice);
 
             // Act
-            var result = await _movieService.GetCheaperMoviePriceAsync();
+            var result = await _movieService.GetLowestPriceMoviesPriceAsync();
 
             // Assert
             Assert.Single(result);
@@ -152,7 +152,7 @@ namespace MovieMateAPI.Tests.Services
             SetupHttpResponse<MovieDetails>("http://testapi/cinemaworld/movie/cw1", (MovieDetails?)null, HttpStatusCode.NotFound);
 
             // Act
-            var result = await _movieService.GetCheaperMoviePriceAsync();
+            var result = await _movieService.GetLowestPriceMoviesPriceAsync();
 
             // Assert
             Assert.Single(result);
