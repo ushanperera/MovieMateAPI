@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 //--------------------------Add services (DI) to app---------------------
 builder.AddDependencies();
 
-builder.AddDummyDataServices();
-builder.AddWebjetApiServices();
+builder.AddDummyDataServices(); // for the static enpoints available in this API (similer to API provide)
+builder.AddWebjetApiServices(); // ths will fetch data from Webjet API for lower movie price
 
 
 //--------------------------Middleware-----------------------------------

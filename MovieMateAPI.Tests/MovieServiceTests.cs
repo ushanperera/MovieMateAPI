@@ -53,10 +53,10 @@ namespace MovieMateAPI.Tests.Services
                 }
             };
 
-            var cinemaWorldDetails1 = new MovieDetails { Price = "10.50" };
-            var cinemaWorldDetails2 = new MovieDetails { Price = "15.00" };
-            var filmWorldDetails1 = new MovieDetails { Price = "9.99" };
-            var filmWorldDetails3 = new MovieDetails { Price = "20.00" };
+            var cinemaWorldDetails1 = new MovieDetails { Price = "1000" };
+            var cinemaWorldDetails2 = new MovieDetails { Price = "1500" };
+            var filmWorldDetails1 = new MovieDetails { Price = "300" };
+            var filmWorldDetails3 = new MovieDetails { Price = "2000" };
 
             SetupHttpResponse("http://testapi/cinemaworld/movies", cinemaWorldMovies);
             SetupHttpResponse("http://testapi/filmworld/movies", filmWorldMovies);
@@ -70,12 +70,13 @@ namespace MovieMateAPI.Tests.Services
 
             // Assert
             Assert.Equal(3, result.Count);
+
             Assert.Equal("Movie 1", result[0].movie.Title);
-            Assert.Equal(9.99M, result[0].lowestPrice);
+            Assert.Equal(300, result[0].lowestPrice);
             Assert.Equal("Movie 2", result[1].movie.Title);
-            Assert.Equal(15.00M, result[1].lowestPrice);
+            Assert.Equal(1500, result[1].lowestPrice);
             Assert.Equal("Movie 3", result[2].movie.Title);
-            Assert.Equal(20.00M, result[2].lowestPrice);
+            Assert.Equal(2000, result[2].lowestPrice);
         }
 
 [Fact]
@@ -85,7 +86,7 @@ namespace MovieMateAPI.Tests.Services
             var cinemaWorldMovies = new MovieResponse { Movies = new List<Movie> { new Movie { ID = "cw1", Title = "Movie 1" } } };
             var filmWorldMovies = new MovieResponse { Movies = new List<Movie> { new Movie { ID = "fw1", Title = "Movie 1" } } };
             var movieDetailsWithInvalidPrice = new MovieDetails { Price = "invalid-price" };
-            var movieDetailsWithValidPrice = new MovieDetails { Price = "12.50" };
+            var movieDetailsWithValidPrice = new MovieDetails { Price = "150" };
 
             SetupHttpResponse("http://testapi/cinemaworld/movies", cinemaWorldMovies);
             SetupHttpResponse("http://testapi/filmworld/movies", filmWorldMovies);
@@ -97,8 +98,9 @@ namespace MovieMateAPI.Tests.Services
 
             // Assert
             Assert.Single(result);
+
             Assert.Equal("Movie 1", result[0].movie.Title);
-            Assert.Equal(12.50M, result[0].lowestPrice);
+            Assert.Equal(150, result[0].lowestPrice);
         }
 
         [Fact]
@@ -116,9 +118,11 @@ namespace MovieMateAPI.Tests.Services
 
             // Assert
             Assert.Equal(2, result.Count);
+
             Assert.Contains(result, m => m.ID == "cw1");
             Assert.Contains(result, m => m.ID == "fw1");
         }
+
 
         [Fact]
         public async Task GetAllMovies_HandlesOneProviderFailure()
@@ -137,6 +141,7 @@ namespace MovieMateAPI.Tests.Services
             Assert.Equal("Movie 2", result[0].Title);
         }
 
+
         [Fact]
         public async Task GetMoviesWithCheapestPriceAsync_HandlesMovieDetailsFailure()
         {
@@ -151,11 +156,18 @@ namespace MovieMateAPI.Tests.Services
 
             // Assert
             Assert.Single(result);
-            Assert.Equal("Movie 1", result[0].movie.Title);
-            Assert.Null(result[0].lowestPrice);
-        }
-        // ... [rest of your test methods] ...
 
+            Assert.Equal("Movie 1", result[0].movie.Title);
+            Assert.Null(result[0].lowestPrice); //has to be null
+        }
+
+        /// <summary>
+        /// This will Mocks the HTTP Call
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="url"></param>
+        /// <param name="response"></param>
+        /// <param name="statusCode"></param>
         private void SetupHttpResponse<T>(string url, T? response, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             var responseMessage = new HttpResponseMessage
@@ -168,6 +180,11 @@ namespace MovieMateAPI.Tests.Services
         }
     }
 
+
+
+    /// <summary>
+    /// this is for mocking HTTP responses
+    /// </summary>
     public static class MockHttpMessageHandlerExtensions
     {
         public static void SetupSendAsync(this Mock<HttpMessageHandler> handlerMock, string requestUrl, HttpResponseMessage responseMessage)

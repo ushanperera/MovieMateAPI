@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using MovieMateAPI.Models;
-using MovieMateAPI.Repository;
+﻿using MovieMateAPI.Repository;
 using MovieMateAPI.Services;
 
 namespace MovieMateAPI.Endpoints
@@ -9,19 +7,26 @@ namespace MovieMateAPI.Endpoints
     {
         public static void UseAppEndpoints(this WebApplication app)
         {
-            app.MapGet("/api/movies/compare", GetCompareMovies);
+
+            app.MapGet("/api/movies/compare", GetLowestPriceMovies);
 
             app.MapGet("/api/cinemaworld/movies", GetCinemaWorldMovie);
             app.MapGet("/api/filmworld/movies", GetFilmWorldMovie);
             app.MapGet("/api/cinemaworld/movie/{id}", GetCinemaWorldMovieById);
             app.MapGet("/api/filmworld/movie/{id}", GetFilmWorldMovieById);
 
-
         }
-        public static async Task<IResult> GetCompareMovies(IMovieService service)
+        public static async Task<IResult> GetLowestPriceMovies(IMovieService service, ILoggerFactory loggerFactory)
         {
-            var data = await service.GetCheaperMoviePriceAsync();
+            var data = await service.GetLowestPriceMoviesPriceAsync();
 
+            if (data == null)
+            {
+                var logger = loggerFactory.CreateLogger("Compare Movies");
+                logger.LogWarning("CheaperMoviePrice Response is null.");
+
+                return Results.NotFound("No data found.");
+            }
             return Results.Ok(data.Select(x => new
             {
                 x.movie.Title,
