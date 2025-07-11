@@ -32,7 +32,7 @@ namespace MovieMateAPI.Tests.Services
         }
 
         [Fact]
-        public async Task GetMoviesWithCheapestPriceAsync_ReturnsMoviesWithLowestPrices()
+        public async Task GetMoviesWithLowestPriceAsync_ReturnsMoviesWithLowestPrices()
         {
             // Arrange
             var cinemaWorldMovies = new MovieResponse
@@ -80,7 +80,7 @@ namespace MovieMateAPI.Tests.Services
         }
 
 [Fact]
-        public async Task GetMoviesWithCheapestPriceAsync_HandlesInvalidPriceData()
+        public async Task GetMoviesWithLowestPriceAsync_HandlesInvalidPriceData()
         {
             // Arrange
             var cinemaWorldMovies = new MovieResponse { Movies = new List<Movie> { new Movie { ID = "cw1", Title = "Movie 1" } } };
@@ -143,7 +143,7 @@ namespace MovieMateAPI.Tests.Services
 
 
         [Fact]
-        public async Task GetMoviesWithCheapestPriceAsync_HandlesMovieDetailsFailure()
+        public async Task GetMoviesWithLowestPriceAsync_HandlesMovieDetailsFailure()
         {
             // Arrange
             var movies = new MovieResponse { Movies = new List<Movie> { new Movie { ID = "cw1", Title = "Movie 1" } } };

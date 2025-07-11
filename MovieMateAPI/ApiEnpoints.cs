@@ -32,7 +32,7 @@ namespace MovieMateAPI.Endpoints
                 x.movie.Title,
                 x.movie.Year,
                 x.movie.Poster,
-                CheapestPrice = x.lowestPrice.HasValue ? x.lowestPrice.Value.ToString() : "Unavailable"
+                LowestPrice = x.lowestPrice.HasValue ? x.lowestPrice.Value.ToString() : "Unavailable"
             }));
         }
 
