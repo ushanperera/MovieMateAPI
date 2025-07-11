@@ -1,5 +1,6 @@
 ﻿using MovieMateAPI.Dependencies.Configs;
 using MovieMateAPI.Repository;
+using Serilog;
 
 namespace MovieMateAPI.Dependencies
 {
@@ -13,8 +14,6 @@ namespace MovieMateAPI.Dependencies
 
             //Add the Cores services
             builder.Services.AddCoresServises();
-
-           
 
         }
     }

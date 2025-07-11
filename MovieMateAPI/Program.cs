@@ -4,7 +4,9 @@ using MovieMateAPI.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//--------------------------Add services (DI) to app---------------------
+//--------------------------Add services to app---------------------
+builder.AddSerilogServises(); //Serilog added with rolling daily config 
+
 builder.AddDependencies();
 
 builder.AddDummyDataServices(); // for the static enpoints available in this API (similer to API provide)

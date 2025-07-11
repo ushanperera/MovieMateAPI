@@ -2,7 +2,7 @@
 using Polly;
 using Polly.Extensions.Http;
 
-namespace MovieMateAPI.Dependencies.Configs
+namespace MovieMateAPI.Dependencies
 {
     public static class WebjetApiConfig
     {
